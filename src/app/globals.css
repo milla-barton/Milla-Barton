@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-11/12;
+}
+
+.gradient-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+}
+
+.hero-section {
+  min-height: 70vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.process-item {
+  @apply flex flex-col items-center text-center p-4;
+}
+
+.faq-item {
+  @apply border-b border-gray-200 py-4;
+}
+
+.gallery-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.gallery-item {
+  @apply relative overflow-hidden h-64;
+}
+
+.gallery-item img {
+  @apply object-cover w-full h-full transition-transform duration-300;
+}
+
+.gallery-item:hover img {
+  @apply scale-105;
+}
+
+.gallery-caption {
+  @apply absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-sm;
+}
+
+.custom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  background: black;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px 2px rgba(128, 0, 128, 0.7);
+}
+
+.custom-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.image-slider-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-slider-container::before,
+.image-slider-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: white;
+  z-index: 15;
+}
+
+.image-slider-container::before {
+  left: 0;
+}
+
+.image-slider-container::after {
+  right: 0;
+}
+
+
+.my-masonry-grid {
+  display: -webkit-box; /* Old versions of Safari */
+  display: -ms-flexbox; /* IE 10 */
+  display: flex;
+  margin-left: -30px; /* Adjust based on your gap */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 30px; /* Adjust based on your gap */
+  background-clip: padding-box;
+}
+
+

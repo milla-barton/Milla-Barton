@@ -1,0 +1,105 @@
+function initializeSheets() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // Initialize Contact sheet
+  let contactSheet = ss.getSheetByName('Contact');
+  if (!contactSheet) {
+    contactSheet = ss.insertSheet('Contact');
+  }
+  // Set headers (will overwrite existing if run again)
+  contactSheet.clear();
+  contactSheet.appendRow([
+    'Timestamp', 
+    'Name', 
+    'Email', 
+    'Subject', 
+    'Message'
+  ]);
+  
+  // Initialize QuickQuote sheet
+  let quoteSheet = ss.getSheetByName('QuickQuote');
+  if (!quoteSheet) {
+    quoteSheet = ss.insertSheet('QuickQuote');
+  }
+  // Set headers (will overwrite existing if run again)
+  quoteSheet.clear();
+  quoteSheet.appendRow([
+    'Timestamp',
+    'Project Type',
+    'Number of Rooms',
+    'Room Type',
+    'Surface Area',
+    'Design Style',
+    'Postal Code',
+    'First Name',
+    'Email',
+    'Phone',
+    'Note'
+  ]);
+  
+  // Format headers if desired
+  const headerRange = contactSheet.getRange(1, 1, 1, contactSheet.getLastColumn());
+  headerRange.setFontWeight('bold');
+  
+  const quoteHeaderRange = quoteSheet.getRange(1, 1, 1, quoteSheet.getLastColumn());
+  quoteHeaderRange.setFontWeight('bold');
+  
+  return 'Sheets initialized successfully!';
+}
+
+
+function doPost(e) {
+  const response = ContentService.createTextOutput();
+  response.setMimeType(ContentService.MimeType.JSON);
+  
+  try {
+    const jsonData = JSON.parse(e.postData.contents);
+    const formType = jsonData.formType;
+    const formData = jsonData.formData;
+    
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let targetSheet;
+    
+    if (formType === 'contact') {
+      targetSheet = ss.getSheetByName('Contact');
+      const contactData = [
+        new Date(),
+        formData.name,
+        formData.email,
+        formData.subject,
+        formData.message,
+      ];
+      targetSheet.appendRow(contactData);
+    } 
+    else if (formType === 'quickquote') {
+      targetSheet = ss.getSheetByName('QuickQuote');
+      const quoteData = [
+        new Date(),
+        formData.projectType || '',
+        formData.numberOfRooms || '',
+        formData.roomType || '',
+        formData.surfaceArea || 0,
+        formData.designStyle || '',
+        formData.postalCode || '',
+        formData.firstName || '',
+        formData.email || '',
+        formData.phone || '',
+        formData.note || ''
+      ];
+      targetSheet.appendRow(quoteData);
+    }
+    else {
+      throw new Error('Invalid form type');
+    }
+    
+    response.setContent(JSON.stringify({status: 'success'}));
+    return response;
+    
+  } catch (error) {
+    response.setContent(JSON.stringify({
+      status: 'error',
+      message: error.message
+    }));
+    return response;
+  }
+}
