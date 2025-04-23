@@ -3,6 +3,7 @@ import { Cookie, Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId="GTM-WZX2D5ZT"/>
         {children}
         <CookieConsent />
+        <SpeedInsights />
       </body>
     </html>
   );
