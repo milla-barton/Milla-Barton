@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cookie, Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
+        <GoogleTagManager gtmId="GTM-WZX2D5ZT"/>
         {children}
         <CookieConsent />
       </body>
