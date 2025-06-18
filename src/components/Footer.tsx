@@ -58,7 +58,7 @@ export default function Footer() {
               <li>
               <a href="mailto:barton.milla@orange.fr" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
   <Mail size={18} />
-  <span>Mail</span>
+  <span>barton.milla@orange.fr</span>
 </a>
 
               </li>
