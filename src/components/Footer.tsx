@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Instagram, Linkedin, Facebook, Phone, Mail, MessageSquare } from 'lucide-react';
+import { Instagram,  Phone, Mail, MessageSquare } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -25,45 +26,53 @@ export default function Footer() {
             <h3 className="text-lg font-medium mb-4">Réseaux sociaux</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="https://instagram.com" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
-                  <Instagram size={18} />
-                  <span>Instagram</span>
-                </Link>
+              <a
+  href="https://instagram.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start"
+>
+  <Instagram size={18} />
+  <span>Instagram</span>
+</a>
+
               </li>
-              <li>
-                <Link href="https://linkedin.com" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
-                  <Linkedin size={18} />
-                  <span>Linkedin</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="https://facebook.com" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
-                  <Facebook size={18} />
-                  <span>Facebook</span>
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
           {/* Contact Information */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-lg font-medium mb-4">Coordonnées</h3>
+            <h3 className="text-lg font-medium mb-4">Contactez nous</h3>
             <ul className="space-y-3">
-              <li className="text-gray-400 flex items-center gap-2 justify-center md:justify-start">
-                <Phone size={18} />
-                <span>09 24 72 52 51</span>
+            <li className="text-gray-400 flex items-center gap-2 justify-center md:justify-start">
+  <a
+    href="tel:+33664025668"
+    className="flex items-center gap-2 hover:text-white transition-colors"
+  >
+    <Phone size={18} />
+    <span>+33 6 64 02 56 68</span>
+  </a>
+</li>
+
+              <li>
+              <a href="mailto:barton.milla@orange.fr" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
+  <Mail size={18} />
+  <span>Mail</span>
+</a>
+
               </li>
               <li>
-                <Link href="mailto:contact@mb-design.fr" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
-                  <Mail size={18} />
-                  <span>Mail</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="https://wa.me/33924725251" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start">
-                  <MessageSquare size={18} />
-                  <span>Whatsapp</span>
-                </Link>
+              <a
+  href="https://wa.me/33664025668"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 justify-center md:justify-start"
+>
+  <FaWhatsapp size={18} />
+  <span>Whatsapp</span>
+</a>
+
               </li>
             </ul>
           </div>

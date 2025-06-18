@@ -88,15 +88,15 @@ export default function Contact() {
                     <h2 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 md:mb-8">Contact</h2>
 
                     <div className="text-gray-700 mb-6 md:mb-8">
-                        <p>Milla Barton, décoratrice d'intérieur basée à Neuilly sur SEINE.</p>
-                        <p>Pour vos projets, n'hésitez pas à me contacter</p>
+                        <p className='text-lg'>Milla Barton, décoratrice d'intérieur basée à Neilly sur Seine.</p>
+                        <p className='text-lg'>Pour vos projets, n'hésitez pas à me contacter</p>
                         <div className="mt-2 md:mt-4 flex items-center gap-2">
-                            <Phone className="w-4 h-4" />
-                            <span>Tel: +(33) 6 67 99 15 25</span>
+                            <Phone className="w-6 h-6" />
+                            <span className='text-lg'>Tel: +(33) 6 64 02 56 68</span>
                         </div>
                         <div className="mt-1 flex items-center gap-2">
-                            <Mail className="w-4 h-4" />
-                            <span>Email: your-email@example.com</span>
+                            <Mail className="w-6 h-6" />
+                            <span className='text-lg'>Email: barton.milla@orange.fr</span>
                         </div>
                     </div>
 
