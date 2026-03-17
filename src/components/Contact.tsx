@@ -31,6 +31,16 @@ export default function Contact() {
         setFormData(prev => ({ ...prev, consent: e.target.checked }));
     };
 
+    const trackFormSubmission = (success: boolean) => {
+        if (typeof window === 'undefined') return;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'form_submission',
+            formType: 'contact',
+            success,
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -62,6 +72,7 @@ export default function Contact() {
             
             if (emailresponse.ok) {
                 setSubmitStatus('success');
+                trackFormSubmission(true);
                 setFormData({
                     name: '',
                     email: '',
@@ -71,10 +82,12 @@ export default function Contact() {
                 });
             } else {
                 setSubmitStatus('error');
+                trackFormSubmission(false);
             }
         } catch (error) {
             console.error('Error submitting form:', error);
             setSubmitStatus('error');
+            trackFormSubmission(false);
         } finally {
             setIsSubmitting(false);
         }

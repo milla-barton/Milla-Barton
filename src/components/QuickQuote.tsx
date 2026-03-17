@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Paintbrush, Home, Check } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 type FormData = {
     projectType: string;
@@ -25,6 +25,7 @@ export default function QuickQuote() {
         AOS.init({ duration: 1000, once: true });
     }, []);
 
+    const router = useRouter();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<FormData>({
         projectType: '',
@@ -44,7 +45,7 @@ export default function QuickQuote() {
     const handleNext = async () => {
         if (step === 6) {
             await handleSubmit();
-        } else if (step < 7) {
+        } else if (step < 6) {
             // Special handling for Fabrication project type
             if (step === 1 && formData.projectType === 'Fabrication') {
                 setStep(6); // Skip to step 6
@@ -100,13 +101,42 @@ export default function QuickQuote() {
 
             if (response.ok) {
                 setSubmitStatus('success');
-                setStep(7);
+
+                // Track form submission via Google Tag Manager / gtag
+                if (typeof window !== 'undefined') {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'form_submission',
+                        formType: 'quickquote',
+                        success: true,
+                    });
+                }
+
+                router.push('/quote-success');
             } else {
                 setSubmitStatus('error');
+
+                if (typeof window !== 'undefined') {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'form_submission',
+                        formType: 'quickquote',
+                        success: false,
+                    });
+                }
             }
         } catch (error) {
             console.error('Error submitting form:', error);
             setSubmitStatus('error');
+
+            if (typeof window !== 'undefined') {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'form_submission',
+                    formType: 'quickquote',
+                    success: false,
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -139,7 +169,6 @@ export default function QuickQuote() {
         "Surface du bien",
         "Style de design",
         "Vos Coordonnés",
-        "Retourner à l'accueil"
     ];
 
     return (
@@ -163,7 +192,7 @@ export default function QuickQuote() {
                         className="absolute h-0.5 bg-black z-10 transition-all duration-300"
                         style={{
                             top: '26px',
-                            width: `${Math.max(0, (step - 1) / 6 * 70)}%`,
+                            width: `${Math.max(0, (step - 1) / 5 * 70)}%`,
                             left: '15%'
                         }}
                     ></div>
@@ -171,11 +200,11 @@ export default function QuickQuote() {
                     {/* Steps container */}
                     <div className="relative z-20 w-full flex justify-center">
                         <div className="flex justify-between" style={{ width: '80%' }}>
-                            {[1, 2, 3, 4, 5, 6, 7].map((stepNumber) => (
+                            {[1, 2, 3, 4, 5, 6].map((stepNumber) => (
                                 <div
                                     key={stepNumber}
                                     className="flex flex-col items-center relative"
-                                    style={{ width: `${100 / 7}%` }}
+                                    style={{ width: `${100 / 6}%` }}
                                 >
                                     {/* Step circle */}
                                     <button
@@ -484,107 +513,90 @@ export default function QuickQuote() {
                         </div>
                     )}
 
-{step === 6 && (
-    <div className="text-center px-4 sm:px-0">
-        <h3 className="text-2xl md:text-3xl text-center lg:text-4xl font-semibold mt-16 mb-10">Vos Coordonnés</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            {/* Add this conditional note field */}
-            {formData.projectType === 'Fabrication' && (
-  <div className="mb-4 w-full col-span-1 sm:col-span-2">
-    <label className="block text-center mb-2 sm:mb-4 text-lg sm:text-3xl text-neutral-600 font-bold">
-      Notes sur votre projet
-    </label>
-    <div className="w-full flex justify-center">
-      <textarea
-        name="note"
-        placeholder="Décrivez votre projet de fabrication..."
-        value={formData.note}
-        onChange={(e) => setFormData({...formData, note: e.target.value})}
-        className="w-full border border-neutral-800 p-2 rounded text-sm text-left relative"
-        style={{
-          minHeight: '120px',
-          resize: 'vertical', // Allows vertical resizing
-        }}
-        onFocus={(e) => {
-          e.target.style.backgroundPosition = 'left 0.5rem';
-          e.target.style.textAlign = 'left';
-        }}
-        onBlur={(e) => {
-          if (!e.target.value) {
-            e.target.style.backgroundPosition = 'center center';
-            e.target.style.textAlign = 'center';
-          }
-        }}
-      />
-    </div>
-    <style jsx>{`
-      textarea::placeholder {
-        text-align: center;
-        line-height: 100px; /* Match this with your minHeight */
-        background-image: linear-gradient(transparent, transparent);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: 100%;
-      }
-      textarea:focus::placeholder {
-        color: transparent;
-        background-image: none;
-      }
-    `}</style>
-  </div>
-)}
-            {['postalCode', 'firstName', 'email', 'phone'].map((field) => (
-                <div key={field} className="mb-4 w-full">
-                    <label className="block text-center mb-2 sm:mb-4 text-lg sm:text-3xl text-neutral-600 font-bold">
-                        {field === 'postalCode' ? 'Code postal' :
-                            field === 'firstName' ? 'Prénom' :
-                                field === 'email' ? 'E-mail' : 'Téléphone'}
-                    </label>
-                    <input
-                        type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
-                        name={field}
-                        placeholder={field === 'postalCode' ? 'Code Postal' :
-                            field === 'firstName' ? 'Prénom' :
-                                field === 'email' ? 'Email' : 'Numéro de portable'}
-                        value={formData[field as keyof FormData]}
-                        onChange={handleChange}
-                        className="w-full border border-neutral-800 p-2 rounded text-sm text-center mx-auto"
-                        style={{ maxWidth: '400px' }}
-                        required
-                    />
-                </div>
-            ))}
-            
-            
-        </div>
-        <div className="flex justify-between mt-8">
-            <Button className="rounded-none h-12 w-28 md:h-14 md:w-40" onClick={handleBack}>Précédent</Button>
-            <Button className="rounded-none h-12 w-28 md:h-14 md:w-40 disabled:bg-black disabled:text-white disabled:opacity-100 disabled:cursor-pointer" 
-                onClick={handleNext} 
-                disabled={isNextButtonDisabled()}>
-                {isSubmitting ? 'Envoi en cours...' : 'Suivant'}
-            </Button>
-        </div>
-    </div>
-)}
-
-                    {step === 7 && (
-                        <div className="text-center">
-                            <h3 className="text-2xl md:text-3xl text-center lg:text-4xl font-semibold mt-16 mb-10">C'est déjà fini !</h3>
-                            <p className="mb-4">
-                                Merci d'avoir rempli notre formulaire de demande de devis. Votre satisfaction est notre priorité et nous sommes ravis de pouvoir vous aider à concrétiser votre projet de rénovation et de décoration d'intérieur.
-                            </p>
-                            <p className="mb-4">
-                                Nous avons bien reçu vos informations et notre équipe va les analyser avec attention. Vous serez contacté sous peu pour discuter des détails supplémentaires et vous fournir un devis personnalisé.
-                            </p>
-                            <p className="mb-4">
-                                En attendant, n'hésitez pas à nous contacter pour toute question ou information complémentaire.
-                            </p>
-                            <Button onClick={() => window.location.href = '/'} className="bg-black text-white h-12 w-28 md:h-14 md:w-40 rounded-none">
-                                Retourner à l'accueil
-                            </Button>
+                    {step === 6 && (
+                        <div className="text-center px-4 sm:px-0">
+                            <h3 className="text-2xl md:text-3xl text-center lg:text-4xl font-semibold mt-16 mb-10">Vos Coordonnés</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                                {/* Add this conditional note field */}
+                                {formData.projectType === 'Fabrication' && (
+                    <div className="mb-4 w-full col-span-1 sm:col-span-2">
+                        <label className="block text-center mb-2 sm:mb-4 text-lg sm:text-3xl text-neutral-600 font-bold">
+                        Notes sur votre projet
+                        </label>
+                        <div className="w-full flex justify-center">
+                        <textarea
+                            name="note"
+                            placeholder="Décrivez votre projet de fabrication..."
+                            value={formData.note}
+                            onChange={(e) => setFormData({...formData, note: e.target.value})}
+                            className="w-full border border-neutral-800 p-2 rounded text-sm text-left relative"
+                            style={{
+                            minHeight: '120px',
+                            resize: 'vertical', // Allows vertical resizing
+                            }}
+                            onFocus={(e) => {
+                            e.target.style.backgroundPosition = 'left 0.5rem';
+                            e.target.style.textAlign = 'left';
+                            }}
+                            onBlur={(e) => {
+                            if (!e.target.value) {
+                                e.target.style.backgroundPosition = 'center center';
+                                e.target.style.textAlign = 'center';
+                            }
+                            }}
+                        />
+                        </div>
+                        <style jsx>{`
+                        textarea::placeholder {
+                            text-align: center;
+                            line-height: 100px; /* Match this with your minHeight */
+                            background-image: linear-gradient(transparent, transparent);
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                            background-size: 100%;
+                        }
+                        textarea:focus::placeholder {
+                            color: transparent;
+                            background-image: none;
+                        }
+                        `}</style>
+                    </div>
+                    )}
+                                {['postalCode', 'firstName', 'email', 'phone'].map((field) => (
+                                    <div key={field} className="mb-4 w-full">
+                                        <label className="block text-center mb-2 sm:mb-4 text-lg sm:text-3xl text-neutral-600 font-bold">
+                                            {field === 'postalCode' ? 'Code postal' :
+                                                field === 'firstName' ? 'Prénom' :
+                                                    field === 'email' ? 'E-mail' : 'Téléphone'}
+                                        </label>
+                                        <input
+                                            type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+                                            name={field}
+                                            placeholder={field === 'postalCode' ? 'Code Postal' :
+                                                field === 'firstName' ? 'Prénom' :
+                                                    field === 'email' ? 'Email' : 'Numéro de portable'}
+                                            value={formData[field as keyof FormData]}
+                                            onChange={handleChange}
+                                            className="w-full border border-neutral-800 p-2 rounded text-sm text-center mx-auto"
+                                            style={{ maxWidth: '400px' }}
+                                            required
+                                        />
+                                    </div>
+                                ))}
+                                
+                                
+                            </div>
+                            <div className="flex justify-between mt-8">
+                                <Button className="rounded-none h-12 w-28 md:h-14 md:w-40" onClick={handleBack}>Précédent</Button>
+                                <Button className="rounded-none h-12 w-28 md:h-14 md:w-40 disabled:bg-black disabled:text-white disabled:opacity-100 disabled:cursor-pointer" 
+                                    onClick={handleNext} 
+                                    disabled={isNextButtonDisabled()}>
+                                    {isSubmitting ? 'Envoi en cours...' : 'Suivant'}
+                                </Button>
+                            </div>
                         </div>
                     )}
+
                 </div>
             </div>
         </section>

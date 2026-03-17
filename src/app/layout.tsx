@@ -4,6 +4,7 @@ import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import GtagPageView from "../components/GtagPageView";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,8 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <GoogleTagManager gtmId="GTM-WZX2D5ZT"/>
+        <GoogleTagManager gtmId="GTM-N2DTQRVT"/>
+        <GtagPageView />
         {children}
         <CookieConsent />
         <SpeedInsights />
