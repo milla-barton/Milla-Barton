@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { PROJECTS, PortfolioProject } from "@/lib/portfolio-data";
-
+import Image from "next/image";
 /* ─── tiny helpers ─────────────────────────────────────── */
 function useIntersect(cb: () => void, opts?: IntersectionObserverInit) {
   const ref = useRef<HTMLDivElement>(null);
@@ -54,13 +54,27 @@ function Hero() {
             </a>
           </div>
           <div className="hero-images">
-            <div className="hero-img">
+            <div className="hero-img" >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/hero/hero-1.webp" alt="Salon design Milla Barton" loading="eager" />
+              <Image
+                  src="/images/hero/hero-1.webp"
+                  alt="Salon design Milla Barton"
+                  fill
+                  priority          // ← preloads, no lazy
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  style={{ objectFit: "cover" }}
+                />
             </div>
             <div className="hero-img">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/hero/hero-2.webp" alt="Cuisine design Milla Barton" loading="eager" />
+              <Image
+                src="/images/hero/hero-2.webp"
+                alt="Cuisine design Milla Barton"
+                fill
+                priority
+                sizes="(max-width: 768px) 50vw, 25vw"
+                style={{ objectFit: "cover" }}
+              />
             </div>
           </div>
         </div>
@@ -121,10 +135,17 @@ function PortfolioModal({ project, onClose }: { project: PortfolioProject; onClo
         {/* Main viewer */}
         <div className="modal-viewer">
           {project.images.map((img, i) => (
-            <div key={i} className={`modal-slide${i === idx ? " active" : ""}`}>
+            <div key={i} className={`modal-slide${i === idx ? " active" : ""}`} style={{ animationDelay: `${i * 100}ms` }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} loading={i === 0 ? "eager" : "lazy"} />
-            </div>
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              sizes="100vw"
+              style={{ objectFit: "contain", padding: "12px 56px" }}
+              loading={i === 0 ? "eager" : "lazy"}
+              priority={i === 0}
+            />            </div>
           ))}
           <button className="modal-nav prev" onClick={prev} aria-label="Précédent">‹</button>
           <button className="modal-nav next" onClick={next} aria-label="Suivant">›</button>
@@ -138,9 +159,17 @@ function PortfolioModal({ project, onClose }: { project: PortfolioProject; onClo
               className={`modal-thumb${i === idx ? " active" : ""}`}
               onClick={() => setIdx(i)}
               aria-label={`Photo ${i + 1}`}
+              style={{ animationDelay: `${i * 100}ms` }}
+
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} loading="lazy" />
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="72px"
+                style={{ objectFit: "cover" }}
+              />            
             </button>
           ))}
         </div>
@@ -171,7 +200,15 @@ function Portfolio({
               <div className="portfolio-card" onClick={() => onOpen(p)} role="button" tabIndex={0} onKeyDown={e => e.key === "Enter" && onOpen(p)}>
                 <div className="portfolio-card-img">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.coverSrc} alt={p.coverAlt} loading="lazy" />
+                  <Image
+                    src={p.coverSrc}
+                    alt={p.coverAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: "cover" }}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    priority={i === 0}
+                  />
                 </div>
                 <div className="portfolio-card-body">
                   <div className="portfolio-card-title serif">{p.title}</div>
@@ -434,7 +471,7 @@ export default function Page() {
                   <div className="testimonial-author">
                     <div className="testimonial-avatar">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={t.avatar} alt={t.name} />
+                      <Image src={t.avatar} alt={t.name} width={40} height={40} style={{ objectFit: "cover" }} />
                     </div>
                     <div>
                       <div className="testimonial-name">{t.name}</div>
@@ -461,7 +498,13 @@ export default function Page() {
             <FadeUp>
               <div className="about-photo">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/company/mila.png" alt="Milla Barton — Architecte d'intérieur" loading="lazy" />
+                <Image
+                  src="/images/company/mila.png"
+                  alt="Milla Barton — Architecte d'intérieur"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </FadeUp>
             <FadeUp delay={120}>
@@ -522,7 +565,7 @@ function PhoneFab({ stickyVisible, cookieVisible }: { stickyVisible: boolean; co
 
   return (
     <a
-      href="tel:+33664025668"
+      href="https://wa.me/33664025668"
       aria-label="Appeler Milla Barton"
       className="phone-fab"
       style={{ bottom }}

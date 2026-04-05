@@ -26,6 +26,21 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+
+
+/*adds*/
+
+/* already have border-radius, overflow, aspect-ratio — just add: */
+.hero-img        { position: relative; }
+.portfolio-card-img { position: relative; }
+.about-photo     { position: relative; }
+.testimonial-avatar { position: relative; }
+.modal-viewer       { position: relative; } /* already set — this one is fine */
+.modal-slide { position: relative; }
+.modal-thumb { position: relative; }
+
+
+/*main starts*/
 h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -117,6 +132,7 @@ h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
   position: relative;
 }
 .hero-img {
+  position: relative;
   border-radius: 16px; overflow: hidden;
   aspect-ratio: 3/4;
   background: var(--stone-light);
@@ -623,3 +639,8 @@ h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
   transition: all 0.2s;
 }
 .cookie-accept:hover { background: #f0f0f0; }
+
+
+
+
+
