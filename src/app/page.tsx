@@ -48,8 +48,7 @@ function Hero() {
             <div className="hero-badge">Disponible à Paris &amp; Île-de-France</div>
             <h1>Votre <em>architecte d&apos;intérieur</em> pour une rénovation sur mesure</h1>
             <p className="hero-sub">
-              Milla Barton transforme votre appartement, maison, bureau, restaurant, jardin en un espace qui vous ressemble. Devis personnalisée sous 24h.
-            </p>
+              Milla Barton transforme votre appartement, maison, bureau, restaurant, jardin en un espace qui vous ressemble. Devis personnalisée sous 24h.            </p>
             <a href="#devis" className="final-cta-btn" style={{ fontSize: 15, padding: "14px 32px" }}>
               Obtenir mon estimation gratuite →
             </a>
@@ -300,7 +299,7 @@ function ContactForm() {
                     : "Recevoir mon estimation gratuite →"
                   }
                 </button>
-                <p className="form-note">Sans engagement · Réponse sous 48h · Vos données restent confidentielles</p>
+                <p className="form-note">Sans engagement · Réponse sous 24h · Vos données restent confidentielles</p>
               </form>
             </>
           )}
@@ -364,7 +363,7 @@ export default function Page() {
           <div className="trust-grid">
             <FadeUp><div className="trust-item-num">10+</div><div className="trust-item-label">Années d&apos;expérience</div></FadeUp>
             <FadeUp delay={80}><div className="trust-item-num">4.9<span style={{ fontSize: 18, color: "var(--charcoal)" }}>★</span></div><div className="trust-item-label">Avis Google</div></FadeUp>
-            <FadeUp delay={160}><div className="trust-item-num">48h</div><div className="trust-item-label">Réponse garantie</div></FadeUp>
+            <FadeUp delay={160}><div className="trust-item-num">24h</div><div className="trust-item-label">Réponse garantie</div></FadeUp>
             <FadeUp delay={240}><div className="trust-item-num">100%</div><div className="trust-item-label">Sur mesure</div></FadeUp>
           </div>
         </div>
@@ -383,7 +382,7 @@ export default function Page() {
               <div className="process-card">
                 <div className="process-num">01</div>
                 <h3>Découverte &amp; évaluation</h3>
-                <p>Remplissez le formulaire ci-dessous. Sous 48h, nous vous recontactons pour comprendre vos besoins, évaluer l&apos;espace et définir les grandes lignes du projet.</p>
+                <p>Remplissez le formulaire ci-dessous. Sous 24h, nous vous recontactons pour comprendre vos besoins, évaluer l&apos;espace et définir les grandes lignes du projet.</p>
               </div>
             </FadeUp>
             <FadeUp delay={100}>
