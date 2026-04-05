@@ -541,7 +541,7 @@ function CookieConsent({ onVisibilityChange }: { onVisibilityChange: (v: boolean
   useEffect(() => {
     const accepted = localStorage.getItem("cookie-consent");
     if (!accepted) {
-      const t = setTimeout(() => { setVisible(true); onVisibilityChange(true); }, 800);
+      const t = setTimeout(() => { setVisible(true); onVisibilityChange(true); }, 10000);
       return () => clearTimeout(t);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
