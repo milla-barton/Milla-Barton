@@ -248,7 +248,7 @@ function ContactForm() {
           ) : (
             <>
               <h3>Obtenez votre estimation gratuite</h3>
-              <p className="form-sub">Réponse personnalisée sous 2h, sans engagement.</p>
+              <p className="form-sub">Réponse personnalisée sous 24h, sans engagement.</p>
               <form id="lead-form" onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
