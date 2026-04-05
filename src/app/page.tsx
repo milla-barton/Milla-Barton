@@ -48,7 +48,7 @@ function Hero() {
             <div className="hero-badge">Disponible à Paris &amp; Île-de-France</div>
             <h1>Votre <em>architecte d&apos;intérieur</em> pour une rénovation sur mesure</h1>
             <p className="hero-sub">
-              De la conception à la réalisation, Milla Barton transforme votre appartement ou maison en un espace qui vous ressemble. Estimation personnalisée sous 48h.
+              Milla Barton transforme votre appartement, maison, bureau, restaurant, jardin en un espace qui vous ressemble. Devis personnalisée sous 24h.
             </p>
             <a href="#devis" className="final-cta-btn" style={{ fontSize: 15, padding: "14px 32px" }}>
               Obtenir mon estimation gratuite →
@@ -239,7 +239,7 @@ function ContactForm() {
               </div>
               <h3 style={{ fontSize: 22, marginBottom: 8 }}>Demande envoyée !</h3>
               <p style={{ fontSize: 15, color: "var(--stone)", fontWeight: 300, lineHeight: 1.7, maxWidth: 360, margin: "0 auto 24px" }}>
-                Merci pour votre message. Nous vous répondrons personnellement sous <strong style={{ fontWeight: 600, color: "var(--charcoal)" }}>48h</strong> avec une estimation sur mesure.
+                Merci pour votre message. Nous vous répondrons personnellement sous <strong style={{ fontWeight: 600, color: "var(--charcoal)" }}>24h</strong> avec une estimation sur mesure.
               </p>
               <div style={{ borderTop: "1px solid var(--border)", paddingTop: 20, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
                 <a href="tel:+33664025668" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 18px", borderRadius: 100, border: "1px solid var(--border)", fontSize: 13, color: "var(--charcoal)", textDecoration: "none", fontWeight: 500 }}>📞 +33 6 64 02 56 68</a>
@@ -249,7 +249,7 @@ function ContactForm() {
           ) : (
             <>
               <h3>Obtenez votre estimation gratuite</h3>
-              <p className="form-sub">Réponse personnalisée sous 48h, sans engagement.</p>
+              <p className="form-sub">Réponse personnalisée sous 2h, sans engagement.</p>
               <form id="lead-form" onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
