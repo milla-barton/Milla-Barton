@@ -1,31 +1,31 @@
 import type { Metadata } from "next";
-import { Cookie, Inter } from "next/font/google";
 import "./globals.css";
-import CookieConsent from "@/components/CookieConsent";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import GtagPageView from "../components/GtagPageView";
-
-const inter = Inter({ subsets: ["latin"] });
+import GtagInit from "@/components/GtagInit";
 
 export const metadata: Metadata = {
-  title: "Milla Barton – Transformez votre interieur",
-  description: "Transformez votre intérieur en un lieu qui vous ressemble avec MB Interior Design",
+  title: "Milla Barton — Architecte d'intérieur à Paris | Devis Gratuit",
+  description: "Architecte d'intérieur à Paris & Meudon. Rénovation d'appartements et maisons sur mesure. Estimation gratuite sous 48h, sans engagement.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>
-        <GoogleTagManager gtmId="GTM-N2DTQRVT"/>
-        <GtagPageView />
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        {GA_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+            <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');` }} />
+          </>
+        )}
+      </head>
+      <body>
+        <GtagInit gaId={GA_ID} />
         {children}
-        <CookieConsent />
-        <SpeedInsights />
       </body>
     </html>
   );

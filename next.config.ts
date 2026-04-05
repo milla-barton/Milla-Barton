@@ -1,12 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    reactStrictMode: true,
-    typescript: {
-      ignoreBuildErrors: true,
-    },
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
-  };
-  
-  module.exports = nextConfig;
+import type { NextConfig } from "next";
+const nextConfig: NextConfig = {
+  // All images are local — no remote domains needed
+};
+export default nextConfig;
