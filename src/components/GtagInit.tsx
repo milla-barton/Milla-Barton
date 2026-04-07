@@ -1,10 +1,10 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 declare global {
   interface Window {
-    dataLayer: Record<string, unknown>[];
     gtagEvent: (name: string, params?: Record<string, unknown>) => void;
   }
 }
@@ -13,18 +13,15 @@ export default function GtagInit() {
   const pathname = usePathname();
 
   useEffect(() => {
-    window.dataLayer = window.dataLayer || [];
-
-    // Helper for firing custom events anywhere in the app
+    // Expose helper so any component can fire GTM events
     window.gtagEvent = (name, params = {}) => {
-      window.dataLayer.push({ event: name, ...params });
+      sendGTMEvent({ event: name, ...params });
     };
   }, []);
 
-  // Push a page_view event on every route change
+  // Fire page_view on every route change
   useEffect(() => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    sendGTMEvent({
       event: "page_view",
       page_path: pathname,
       page_title: typeof document !== "undefined" ? document.title : "",

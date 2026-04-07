@@ -229,30 +229,58 @@ function Portfolio({
 function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("loading");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    try {
-      const res = await fetch("/api/submit-form", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   setStatus("loading");
+  //   const data = Object.fromEntries(new FormData(e.currentTarget));
+  //   try {
+  //     const res = await fetch("/api/submit-form", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     });
+  //     if (!res.ok) throw new Error();
+  //     if (typeof window !== "undefined") {
+  //       window.dataLayer = window.dataLayer || [];
+  //       window.dataLayer.push({
+  //         event: "form_submission",
+  //         formType: "devis_gratuit",
+  //         success: true,
+  //       });
+  //     }
+  //     setStatus("success");
+  //   } catch {
+  //     setStatus("error");
+  //   }
+  // }
+
+async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setStatus("loading");
+
+  const data = Object.fromEntries(new FormData(e.currentTarget));
+
+  try {
+    const res = await fetch("/api/submit-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error();
+
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "form_submit",
       });
-      if (!res.ok) throw new Error();
-      if (typeof window !== "undefined" && typeof window.gtagEvent === "function") {
-        window.gtagEvent("form_submit", {
-          event_category: "lead_form",
-          event_label: "devis_gratuit",
-          project_type: String(data.projet ?? ""),
-          city: String(data.ville ?? ""),
-        });
-      }
-      setStatus("success");
-    } catch {
-      setStatus("error");
     }
+
+    setStatus("success");
+  } catch {
+    setStatus("error");
   }
+}
 
   return (
     <section className="section" id="devis" style={{ background: "var(--cream)" }}>
@@ -312,8 +340,12 @@ function ContactForm() {
                       <option value="" disabled>Sélectionnez...</option>
                       <option value="renovation-appartement">Rénovation d&apos;appartement</option>
                       <option value="renovation-maison">Rénovation de maison</option>
-                      <option value="amenagement">Aménagement intérieur</option>
+                      <option value="amenagement-intérieur">Aménagement intérieur</option>
+                      <option value="amenagement-exterieur">Aménagement extérieur</option>
+                      <option value="restaurant">Restaurant / Café</option>
+                      <option value="bureau">Bureau</option>
                       <option value="decoration">Décoration</option>
+                      <option value="autre">Autre</option>
                     </select>
                   </div>
                   <div className="form-group">
