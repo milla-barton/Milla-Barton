@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/b",
+      "destination": "https://landing-page-milla.vercel.app"
+    },
+    {
       "source": "/b/:path*",
-      "destination": "https://site-b-abc123.vercel.app/:path*"
+      "destination": "https://landing-page-milla.vercel.app/:path*"
     }
   ]
 }
