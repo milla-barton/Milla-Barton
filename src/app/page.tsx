@@ -273,6 +273,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "form_submit",
+        formType: "siteA_devis_gratuit",
       });
     }
 
